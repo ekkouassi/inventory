@@ -1,5 +1,8 @@
 package com.digitech.inventories.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -7,16 +10,18 @@ import java.util.List;
 @Entity
 
 public class Category {
-    @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, unique = true)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Id
-    private Long id;
+    private String id;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
 
     @JoinColumn(name = "category_id", nullable = true, referencedColumnName = "id")
-    @ManyToOne(optional = true)
+    @ManyToOne()
+    @JsonBackReference
     private Category category;
 
     @Column(nullable = false, unique = true)
@@ -29,11 +34,11 @@ public class Category {
     @Column(nullable = true)
     private String description;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

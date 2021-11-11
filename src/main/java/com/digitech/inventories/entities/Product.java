@@ -1,14 +1,17 @@
 package com.digitech.inventories.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Product {
     @Column(nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
     @Id
-    private Long id;
+    private String id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
@@ -31,11 +34,11 @@ public class Product {
     private double price;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
