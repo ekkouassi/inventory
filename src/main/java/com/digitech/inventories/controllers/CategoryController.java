@@ -108,11 +108,7 @@ public class CategoryController {
             category.setDescription(model.getDescription());
         }
         if (null != model.getImage()){
-            String fileName =  service.save(model.getImage());
-            String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/uploads/")
-                    .path(fileName)
-                    .toUriString();
+            String imageUrl =  service.save(model.getImage());
             category.setImageUrl(imageUrl);
         }
         return category;

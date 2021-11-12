@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -25,7 +25,7 @@ public class Category {
     private Category category;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Category name is required")
+    @NotEmpty(message = "Category name is required")
     private String name;
 
     @Column(nullable = true)

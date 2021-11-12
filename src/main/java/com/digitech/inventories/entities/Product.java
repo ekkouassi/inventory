@@ -1,9 +1,11 @@
 package com.digitech.inventories.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Product {
@@ -13,12 +15,13 @@ public class Product {
     @Id
     private String id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
-    @NotBlank(message = "Category is required.")
+    @NotNull(message = "Category is required.")
+    @JsonIgnore
     private Category category;
 
-    @NotBlank(message = "Product name is required.")
+    @NotEmpty(message = "Product name is required.")
     private String name;
 
     @Column(nullable =  true)
@@ -27,10 +30,10 @@ public class Product {
     @Column(nullable = true)
     private String description;
 
-    @NotBlank(message = "Product quantity is required.")
+    @NotNull(message = "Product quantity is required.")
     private Integer quantity;
 
-    @NotBlank(message = "Product price is required.")
+    @NotNull(message = "Product price is required.")
     private double price;
 
 

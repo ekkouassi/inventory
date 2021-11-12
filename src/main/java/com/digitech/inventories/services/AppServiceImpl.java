@@ -1,8 +1,10 @@
 package com.digitech.inventories.services;
 
+import com.digitech.inventories.entities.FormWrapper;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,15 +36,13 @@ public class AppServiceImpl implements AppService {
          String insPath =  "uploads/" + uploadedFile;
          Files.write(Paths.get(insPath), bytes);
 
-         return uploadedFile;
+         return ServletUriComponentsBuilder.fromCurrentContextPath()
+                   .path("/uploads/")
+                   .path(uploadedFile)
+                   .toUriString();
        } catch (IOException e) {
            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
        }
-    }
-
-    @Override
-    public Resource load(String filename) {
-        return null;
     }
 
     private String GenerateFileName (int length) {
